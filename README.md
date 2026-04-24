@@ -24,7 +24,7 @@ Foodgram - это приложение, позволяющее пользова�
   ```bash
   sudo docker compose -f docker-compose.production.yml exec backend python manage.py makemigrations
   sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
-  sudo docker compose -f docker-compose.production.yml exec backend python manage.py createsuperuser --noinput
+  sudo docker compose -f docker-compose.production.yml exec backend python manage.py createsuperuser --noinput --first_name admin --last_name admin
   sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
   sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /static/static/
   sudo docker compose -f docker-compose.production.yml exec backend python manage.py loaddata ingredients/fixtures/ingredients/ingredients.json
