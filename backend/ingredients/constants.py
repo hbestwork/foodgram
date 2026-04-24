@@ -1,0 +1,2 @@
+MAX_NAME = 128
+MAX_UNIT = 64

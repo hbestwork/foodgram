@@ -13,13 +13,13 @@ services:
   
   frontend:
     container_name: foodgram-front
-    build: ../frontend    
+    image: dmitriygw/foodgram_frontend    
     volumes:
       - static:/static
   
   backend:
     container_name: foodgram-back
-    build: ../backend/
+    image: dmitriygw/foodgram_backend
     env_file: ../.env    
     volumes:
       - static:/static
@@ -27,10 +27,9 @@ services:
         
   nginx:
     container_name: foodgram-proxy
-    build: ../nginx/
+    image: dmitriygw/foodgram_gateway
     ports:
-      - "8000:80"
+      - "7000:80"
     volumes:      
-      - ../docs/:/usr/share/nginx/html/api/docs/
       - static:/static
       - media:/media

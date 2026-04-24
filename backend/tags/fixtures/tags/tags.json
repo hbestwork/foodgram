@@ -1,0 +1,23 @@
+[
+  {
+    "model": "tags.tag",
+    "fields": {
+      "name": "Завтрак",
+      "slug": "breakfast"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "fields": {
+      "name": "Обед",
+      "slug": "lunch"
+    }
+  },
+  {
+    "model": "tags.tag",
+    "fields": {
+      "name": "Ужин",
+      "slug": "dinner"
+    }
+  }
+]
