@@ -19,6 +19,8 @@ services:
   
   backend:
     container_name: foodgram-back
+    depends_on: 
+      - db
     build: ../backend/
     env_file: ../.env    
     volumes:
@@ -27,6 +29,9 @@ services:
         
   nginx:
     container_name: foodgram-proxy
+    depends_on: 
+      - db
+      - backend
     build: ../nginx/
     ports:
       - "8000:80"
