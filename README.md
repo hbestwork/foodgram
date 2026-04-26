@@ -130,4 +130,8 @@
 
 ---
 
+Приложение доступно по адресу [gwfoodgram.hopto.org](https://gwfoodgram.hopto.org)
+
+---
+
 Автор: Дмитрий Русановский
