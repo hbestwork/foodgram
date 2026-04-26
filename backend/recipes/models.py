@@ -10,6 +10,10 @@ from recipes.constants import (
     MAX_COOKING_TIME,
     MIN_AMOUNT,
     MAX_AMOUNT,
+    MAX_AMOUNT_ERROR,
+    MIN_AMOUNT_ERROR,
+    MAX_COOKING_TIME_ERROR,
+    MIN_COOKING_TIME_ERROR,
 )
 from tags.models import Tag
 
@@ -53,13 +57,11 @@ class Recipe(models.Model):
         validators=(
             MinValueValidator(
                 MIN_COOKING_TIME,
-                message=(f'Время приготовления не может быть '
-                         f'меньше {MIN_COOKING_TIME} минут(ы)')
+                message=MIN_COOKING_TIME_ERROR
             ),
             MaxValueValidator(
                 MAX_COOKING_TIME,
-                message=(f'Время приготовления не может быть '
-                         f'больше {MAX_COOKING_TIME} минут(ы)')
+                message=MAX_COOKING_TIME_ERROR
             ),
         )
     )
@@ -90,14 +92,12 @@ class RecipeIngredient(models.Model):
         verbose_name='Количество',
         validators=(
             MinValueValidator(
-                MIN_COOKING_TIME,
-                message=(f'Количество не может быть '
-                         f'меньше {MIN_AMOUNT}')
+                MIN_AMOUNT,
+                message=MIN_AMOUNT_ERROR
             ),
             MaxValueValidator(
-                MAX_COOKING_TIME,
-                message=(f'Количество не может быть '
-                         f'больше {MAX_AMOUNT}')
+                MAX_AMOUNT,
+                message=MAX_AMOUNT_ERROR
             ),
         )
     )
@@ -113,11 +113,8 @@ class RecipeIngredient(models.Model):
         ]
 
     def __str__(self):
-        r = self.recipe.name
-        i = self.ingredient.name
-        a = self.amount
-        m = self.ingredient.measurement_unit
-        return f'{r}: {i} - {a} {m}'
+        return (f'{self.recipe.name}: {self.ingredient.name} - '
+                f'{self.amount} {self.ingredient.measurement_unit}')
 
 
 class RecipeTag(models.Model):
@@ -173,9 +170,7 @@ class Favorite(models.Model):
         ]
 
     def __str__(self):
-        username = self.user.username
-        name = self.recipe.name
-        return f'{username} likes {name}'
+        return f'{self.user.username} likes {self.recipe.name}'
 
 
 class ShoppingCart(models.Model):
@@ -204,6 +199,4 @@ class ShoppingCart(models.Model):
         ]
 
     def __str__(self):
-        username = self.user.username
-        name = self.recipe.name
-        return f'{username} wants {name}'
+        return f'{self.user.username} wants {self.recipe.name}'

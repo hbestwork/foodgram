@@ -64,8 +64,3 @@ def response_201(data):
 
 def response_204():
     return Response(None, status=status.HTTP_204_NO_CONTENT)
-
-
-def response_400(msg):
-    detail = {'detail': msg}
-    return Response(detail, status=status.HTTP_400_BAD_REQUEST)

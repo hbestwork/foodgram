@@ -5,7 +5,6 @@ from rest_framework import serializers
 
 from api.utils import remove_file, delete_avatar
 from api.validators import (
-    positive_number_validator,
     non_empty_list_validator,
     non_blank_validator,
     non_repeating_validator,
@@ -16,6 +15,17 @@ from api.validators import (
     need_relation_validator,
 )
 from ingredients.models import Ingredient
+from recipes.constants import (
+    MAX_NAME,
+    MIN_COOKING_TIME,
+    MAX_COOKING_TIME,
+    MIN_AMOUNT,
+    MAX_AMOUNT,
+    MIN_AMOUNT_ERROR,
+    MAX_AMOUNT_ERROR,
+    MIN_COOKING_TIME_ERROR,
+    MAX_COOKING_TIME_ERROR
+)
 from recipes.models import Recipe, RecipeIngredient, ShoppingCart, Favorite
 from tags.models import Tag
 from users.models import Subscription
@@ -249,7 +259,14 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
     )
     name = serializers.CharField(required=False)
     measurement_unit = serializers.CharField(required=False)
-    amount = serializers.IntegerField(validators=[positive_number_validator])
+    amount = serializers.IntegerField(
+        max_value=MAX_AMOUNT,
+        min_value=MIN_AMOUNT,
+        error_messages={
+            'max_value': MAX_AMOUNT_ERROR,
+            'min_value': MIN_AMOUNT_ERROR
+        }
+    )
 
     class Meta:
         model = RecipeIngredient
@@ -303,6 +320,10 @@ class RecipeOutputSerializer(serializers.ModelSerializer):
 
 
 class RecipeInputSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=MAX_NAME)
+
+    image = Base64ImageField(validators=[non_blank_validator])
+
     ingredients = RecipeIngredientSerializer(
         source='recipe_ingredients',
         many=True,
@@ -313,7 +334,14 @@ class RecipeInputSerializer(serializers.ModelSerializer):
         many=True,
     )
 
-    image = Base64ImageField(validators=[non_blank_validator])
+    cooking_time = serializers.IntegerField(
+        max_value=MAX_COOKING_TIME,
+        min_value=MIN_COOKING_TIME,
+        error_messages={
+            'max_value': MAX_COOKING_TIME_ERROR,
+            'min_value': MIN_COOKING_TIME_ERROR
+        }
+    )
 
     class Meta:
         model = Recipe
@@ -333,7 +361,7 @@ class RecipeInputSerializer(serializers.ModelSerializer):
         return value
 
     def create_ingredients(self, ingredients, recipe):
-        RecipeIngredient.objects.filter(recipe=recipe).delete()
+        recipe.recipe_ingredients.all().delete()
         recipeingredients = []
         for ingredient in ingredients:
             item = RecipeIngredient(

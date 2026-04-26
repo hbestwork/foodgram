@@ -6,7 +6,6 @@ PAGE_SIZE_QUERY_PARAM = 'limit'
 
 EMPTY_LIST_ERROR = ManyRelatedField.default_error_messages['empty']
 BLANK_FIELD_ERROR = CharField.default_error_messages['blank']
-NON_POSITIVE_ERROR = 'Это значение должно быть положительным.'
 REPEATING_VALUES_ERROR = 'Элементы не должны повторяться.'
 PK_NOT_FOUND = PrimaryKeyRelatedField.default_error_messages['does_not_exist']
 SELF_SUBSCRIPTION_ERROR = 'Нельзя подписаться на самого себя.'

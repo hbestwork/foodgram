@@ -3,7 +3,6 @@ from rest_framework.serializers import ValidationError
 from api.constants import (
     EMPTY_LIST_ERROR,
     BLANK_FIELD_ERROR,
-    NON_POSITIVE_ERROR,
     REPEATING_VALUES_ERROR,
     SELF_SUBSCRIPTION_ERROR,
     ALREADY_SUBSCRIBED_ERROR,
@@ -11,11 +10,6 @@ from api.constants import (
     ALREADY_EXISTS_ERROR,
     NOT_EXISTS_ERROR,
 )
-
-
-def positive_number_validator(value):
-    if value <= 0:
-        raise ValidationError(NON_POSITIVE_ERROR)
 
 
 def non_empty_list_validator(value):
